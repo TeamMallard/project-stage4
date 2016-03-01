@@ -330,6 +330,26 @@ public class Player extends Character {
             } else {
                 velocityY = 0;
             }
+            
+            if(dementedTimer < 0) {
+            	if(dementedState == 0) {
+            		double tempVelX = velocityX;
+            		velocityX = velocityY;
+            		velocityY = tempVelX;
+            	} else if(dementedState == 1) {
+            		double tempVelX = velocityX;
+            		velocityX = velocityY;
+            		velocityY = -tempVelX;
+            	} else if(dementedState == 2) {
+            		double tempVelX = velocityX;
+            		velocityX = -velocityY;
+            		velocityY = tempVelX;
+            	} else if(dementedState == 3) {
+            		double tempVelX = velocityX;
+            		velocityX = -velocityY;
+            		velocityY = -tempVelX;
+            	}
+            }
 
             // If moving diagonally, move slower.
             // This must not be done while flying otherwise the player will slow down and stop.
