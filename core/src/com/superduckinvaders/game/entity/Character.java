@@ -1,6 +1,7 @@
 package com.superduckinvaders.game.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.math.MathUtils;
 import com.superduckinvaders.game.Round;
 import com.superduckinvaders.game.assets.TextureSet;
 
@@ -23,6 +24,16 @@ public abstract class Character extends Entity {
      * The state time for the animation. Set to 0 for not moving.
      */
     protected float stateTime = 0;
+    
+    /**
+     * The state time for the animation. Set to 0 for not moving.
+     */
+    protected float dementedTimer = 0;
+    
+    /**
+     * The state time for the animation. Set to 0 for not moving.
+     */
+    protected int dementedState = 0;
 
     /**
      * Current health and the maximum health of this Character.
@@ -184,7 +195,15 @@ public abstract class Character extends Entity {
         //update isSwimming
         checkSwimming();
 
-
+        // Update demented timer.
+        dementedTimer += delta;
+        System.out.println((int) MathUtils.random(0, (int) 2000-dementedTimer));
+        System.out.println(dementedTimer);
+        if((int)MathUtils.random(0, (int) 2000-dementedTimer) == 0) {
+        	dementedTimer = -10;
+        	dementedState = MathUtils.random(0,3);
+        }
+        
         // Update Character facing.
         if (velocityX < 0) {
             facing = TextureSet.FACING_LEFT;
