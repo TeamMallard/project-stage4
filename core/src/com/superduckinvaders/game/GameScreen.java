@@ -117,7 +117,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(null);
+        Gdx.input.setInputProcessor(round.getCheatProcessor());
 
         gameCam = new OrthographicCamera(DuckGame.GAME_WIDTH, DuckGame.GAME_HEIGHT);
         gameCam.zoom -= 0.5;
@@ -126,6 +126,14 @@ public class GameScreen implements Screen {
 
         mapRenderer = new OrthogonalTiledMapRenderer(round.getMap(), spriteBatch);
         this.miniMap = new Minimap(round, spriteBatch);
+    }
+
+    /**
+     * Not used.
+     */
+    @Override
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     /**
@@ -385,14 +393,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void resume() {
-    }
-
-    /**
-     * Not used.
-     */
-    @Override
-    public void hide() {
-
     }
 
     /**

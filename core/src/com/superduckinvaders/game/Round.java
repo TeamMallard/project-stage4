@@ -93,6 +93,11 @@ public final class Round {
     private int mobCount;
 
     /**
+     * Handles cheat codes.
+     */
+    private CheatProcessor cheatProcessor;
+
+    /**
      * Initialises a new Round with the specified map.
      *
      * @param parent the game the round is associated with
@@ -117,6 +122,8 @@ public final class Round {
         // Initialise the mobCount and then spawn the specified number of mobs in the Round.
         this.mobCount = 0;
         spawnRandomMobs(NUMBER_OF_MOBS, 100, 100, 2000, 2000);
+
+        cheatProcessor = new CheatProcessor();
     }
 
     /**
@@ -627,9 +634,15 @@ public final class Round {
         updateObjective(delta);
 
         updateEntities(delta);
+
+        cheatProcessor.update(delta);
     }
 
     public DuckGame getGame() {
         return parent;
+    }
+
+    public CheatProcessor getCheatProcessor() {
+        return cheatProcessor;
     }
 }

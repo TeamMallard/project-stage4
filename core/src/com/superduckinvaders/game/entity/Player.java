@@ -342,6 +342,24 @@ public class Player extends Character {
         super.update(delta);
     }
 
+    @Override
+    public boolean collidesX(double deltaX) {
+        if (parent.getCheatProcessor().isNoclipCheatActive()) {
+            return false;
+        }
+
+        return super.collidesX(deltaX);
+    }
+
+    @Override
+    public boolean collidesY(double deltaY) {
+        if (parent.getCheatProcessor().isNoclipCheatActive()) {
+            return false;
+        }
+
+        return super.collidesY(deltaY);
+    }
+
     /**
      * Renders this Player.
      *
