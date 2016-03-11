@@ -362,18 +362,32 @@ public class Player extends Character {
         super.update(delta);
     }
 
+    /**
+     * Gets whether the specified x delta will cause a collision on the left or right, taking the noclip cheat into account.
+     *
+     * @param deltaX the x delta
+     * @return whether a collision would occur on the left or right
+     */
     @Override
     public boolean collidesX(double deltaX) {
-        if (parent.getCheatProcessor().isNoclipCheatActive()) {
+        // If the noclip cheat is on, or we are already colliding with something (i.e. stuck)
+        if (parent.getCheatProcessor().isNoclipCheatActive() || super.collidesX(0)) {
             return false;
         }
 
         return super.collidesX(deltaX);
     }
 
+    /**
+     * Gets whether the specified y delta will cause a collision on the bottom or top, taking the noclip cheat into account.
+     *
+     * @param deltaY the y delta
+     * @return whether a collision would occur on the bottom or top
+     */
     @Override
     public boolean collidesY(double deltaY) {
-        if (parent.getCheatProcessor().isNoclipCheatActive()) {
+        // If the noclip cheat is on, or we are already colliding with something (i.e. stuck)
+        if (parent.getCheatProcessor().isNoclipCheatActive() || super.collidesY(0)) {
             return false;
         }
 
