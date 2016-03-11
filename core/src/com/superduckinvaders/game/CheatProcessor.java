@@ -2,11 +2,15 @@ package com.superduckinvaders.game;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
+import com.superduckinvaders.game.assets.Assets;
 
 /**
  * Manages cheats.
  */
 public class CheatProcessor implements InputProcessor {
+
+    private static final Sound CHEAT_SOUND = Assets.buttonPress;
 
     /**
      * How long each cheat is active for.
@@ -89,6 +93,9 @@ public class CheatProcessor implements InputProcessor {
                 // Activate the powerup cheat.
                 if (powerupTimer <= 0) {
                     powerupTimer = CHEAT_ACTIVATION_TIME + CHEAT_COOLDOWN_TIME;
+
+                    // Play sound for cheat activation.
+                    CHEAT_SOUND.play();
                 }
             }
         }
@@ -103,6 +110,9 @@ public class CheatProcessor implements InputProcessor {
                 // Activate the noclip cheat.
                 if (noclipTimer <= 0) {
                     noclipTimer = CHEAT_ACTIVATION_TIME + CHEAT_COOLDOWN_TIME;
+
+                    // Play sound for cheat activation.
+                    CHEAT_SOUND.play();
                 }
             }
         }
