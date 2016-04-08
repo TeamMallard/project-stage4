@@ -123,7 +123,7 @@ public final class Round {
         this.mobCount = 0;
         spawnRandomMobs(NUMBER_OF_MOBS, 100, 100, 2000, 2000);
 
-        cheatProcessor = new CheatProcessor();
+        cheatProcessor = new CheatProcessor(this);
     }
 
     /**

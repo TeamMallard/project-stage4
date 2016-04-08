@@ -12,21 +12,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
 
-    protected static DuckGame duckGame;
-    protected static Round testRound;
+    private static Round testRound;
 
-    private HashMap<Powerup, Double> actualPowerups, expectedPowerups;
+    private double[] actualPowerups, expectedPowerups;
+    //private HashMap<Powerup, Double> actualPowerups, expectedPowerups;
     private Player testPlayer;
 
     @BeforeClass
     public static void setUp() {
-        duckGame = new DuckGame();
+        DuckGame duckGame = new DuckGame();
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.width = 1280;
@@ -35,7 +33,7 @@ public class PlayerTest {
         config.title = "SUPER DUCK INVADERS! - Team Mallard";
         new LwjglApplication(duckGame, config);
 
-        while (duckGame.onGameScreen == false) {
+        while (!duckGame.onGameScreen) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -79,7 +77,7 @@ public class PlayerTest {
 
         testPlayer.setPowerup(Player.Powerup.INVULNERABLE, 1);
         actualPowerups = testPlayer.getPowerups();
-        expectedPowerups.put(Player.Powerup.INVULNERABLE, 1.0);
+        expectedPowerups[Player.Powerup.INVULNERABLE.ordinal()] = 1.0;
 
         assertEquals(actualPowerups, expectedPowerups);
     }
@@ -101,7 +99,7 @@ public class PlayerTest {
     public void setFireratePowerupTest() {
         testPlayer.setPowerup(Player.Powerup.RATE_OF_FIRE, 1);
         actualPowerups = testPlayer.getPowerups();
-        expectedPowerups.put(Player.Powerup.RATE_OF_FIRE, 1.0);
+        expectedPowerups[Player.Powerup.RATE_OF_FIRE.ordinal()] = 1.0;
 
         assertEquals(actualPowerups, expectedPowerups);
     }
@@ -112,7 +110,7 @@ public class PlayerTest {
 
         testPlayer.setPowerup(Player.Powerup.REGENERATION, 1);
         actualPowerups = testPlayer.getPowerups();
-        expectedPowerups.put(Player.Powerup.REGENERATION, 1.0);
+        expectedPowerups[Player.Powerup.REGENERATION.ordinal()] = 1.0;
 
         assertEquals(actualPowerups, expectedPowerups);
     }
@@ -140,7 +138,7 @@ public class PlayerTest {
 
         testPlayer.setPowerup(Player.Powerup.SCORE_MULTIPLIER, 1);
         actualPowerups = testPlayer.getPowerups();
-        expectedPowerups.put(Player.Powerup.SCORE_MULTIPLIER, 1.0);
+        expectedPowerups[Player.Powerup.SCORE_MULTIPLIER.ordinal()] = 1.0;
 
         assertEquals(actualPowerups, expectedPowerups);
     }
@@ -160,7 +158,7 @@ public class PlayerTest {
         testRound.update(1);
         int scoreAfter = testPlayer.getScore();
 
-        assertEquals((int) (scoreAfter - scoreBefore), (int) (10 * Player.PLAYER_SCORE_MULTIPLIER));
+        assertEquals(scoreAfter - scoreBefore, (int) (10 * Player.PLAYER_SCORE_MULTIPLIER));
     }
 
     @Test
@@ -169,7 +167,7 @@ public class PlayerTest {
 
         testPlayer.setPowerup(Player.Powerup.SUPER_SPEED, 1);
         actualPowerups = testPlayer.getPowerups();
-        expectedPowerups.put(Player.Powerup.SUPER_SPEED, 1.0);
+        expectedPowerups[Player.Powerup.SUPER_SPEED.ordinal()] = 1.0;
 
         assertEquals(actualPowerups, expectedPowerups);
     }
@@ -197,7 +195,7 @@ public class PlayerTest {
         testRound.update(1);
         int scoreAfter = testPlayer.getScore();
 
-        assertEquals((int) (scoreAfter - scoreBefore), 10);
+        assertEquals(scoreAfter - scoreBefore, 10);
     }
 
     @Test

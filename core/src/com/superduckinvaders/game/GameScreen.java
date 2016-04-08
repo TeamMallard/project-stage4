@@ -286,7 +286,7 @@ public class GameScreen implements Screen {
 
         //Draw powerup buffs
         int powerupCount = 0;
-        for (Player.Powerup powerup : Player.Powerup.values()) {
+        for (Player.Powerup powerup : Player.Powerup.values) {
             if (round.getPlayer().powerupIsActive(powerup)) {
                 TextureRegion powerupTexture = new TextureRegion(Player.Powerup.getTextureForPowerup(powerup));
                 int powerupDrawScale = 3;

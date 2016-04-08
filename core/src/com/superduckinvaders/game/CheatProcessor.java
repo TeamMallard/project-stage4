@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.superduckinvaders.game.assets.Assets;
+import com.superduckinvaders.game.entity.Player;
 
 /**
  * Manages cheats.
@@ -33,6 +34,11 @@ public class CheatProcessor implements InputProcessor {
     private static final int[] CHEAT_CODE_NOCLIP = new int[]{Input.Keys.M, Input.Keys.A, Input.Keys.L, Input.Keys.L, Input.Keys.A, Input.Keys.R, Input.Keys.D};
 
     /**
+     * The round this CheatProcessor belongs to.
+     */
+    private Round parent;
+
+    /**
      * The current index into each of the cheat codes.
      */
     private int powerupCodeIndex = 0, noclipCodeIndex = 0;
@@ -43,12 +49,11 @@ public class CheatProcessor implements InputProcessor {
     private float powerupTimer = 0, noclipTimer = 0;
 
     /**
-     * Returns whether the all powerups cheat code is currently active.
-     *
-     * @return whether the all powerups cheat code is currently active
+     * Creates a new CheatProcessor.
+     * @param parent the round this CheatProcessor belongs to
      */
-    public boolean isPowerupCheatActive() {
-        return powerupTimer > CHEAT_COOLDOWN_TIME;
+    public CheatProcessor(Round parent) {
+        this.parent = parent;
     }
 
     /**
@@ -56,7 +61,7 @@ public class CheatProcessor implements InputProcessor {
      *
      * @return whether the noclip cheat code is currently active
      */
-    public boolean isNoclipCheatActive() {
+    public boolean isNoclipActive() {
         return noclipTimer > CHEAT_COOLDOWN_TIME;
     }
 
@@ -94,6 +99,11 @@ public class CheatProcessor implements InputProcessor {
                 if (powerupTimer <= 0) {
                     powerupTimer = CHEAT_ACTIVATION_TIME + CHEAT_COOLDOWN_TIME;
 
+                    // Simply add all powerups to a player for the activation time.
+                    for(Player.Powerup powerup : Player.Powerup.values()) {
+                        parent.getPlayer().setPowerup(powerup, CHEAT_ACTIVATION_TIME);
+                    }
+
                     // Play sound for cheat activation.
                     CHEAT_SOUND.play();
                 }
@@ -111,6 +121,7 @@ public class CheatProcessor implements InputProcessor {
                 if (noclipTimer <= 0) {
                     noclipTimer = CHEAT_ACTIVATION_TIME + CHEAT_COOLDOWN_TIME;
 
+                    // Noclip functionality is implemented in the Player class.
                     // Play sound for cheat activation.
                     CHEAT_SOUND.play();
                 }

@@ -10,14 +10,14 @@ import java.util.HashMap;
  */
 public class Powerup extends Item {
 
-    private static final HashMap<Player.Powerup, Integer> POWERUP_MAX_TIMES = new HashMap<Player.Powerup, Integer>();
+    private static final int[] POWERUP_MAX_TIMES = new int[Player.Powerup.values.length];
 
     static {
-        POWERUP_MAX_TIMES.put(Player.Powerup.INVULNERABLE, 10);
-        POWERUP_MAX_TIMES.put(Player.Powerup.RATE_OF_FIRE, 10);
-        POWERUP_MAX_TIMES.put(Player.Powerup.SCORE_MULTIPLIER, 10);
-        POWERUP_MAX_TIMES.put(Player.Powerup.SUPER_SPEED, 10);
-        POWERUP_MAX_TIMES.put(Player.Powerup.REGENERATION, 3);
+        POWERUP_MAX_TIMES[Player.Powerup.INVULNERABLE.ordinal()] = 10;
+        POWERUP_MAX_TIMES[Player.Powerup.RATE_OF_FIRE.ordinal()] = 10;
+        POWERUP_MAX_TIMES[Player.Powerup.SCORE_MULTIPLIER.ordinal()] = 10;
+        POWERUP_MAX_TIMES[Player.Powerup.SUPER_SPEED.ordinal()] = 10;
+        POWERUP_MAX_TIMES[Player.Powerup.REGENERATION.ordinal()] = 3;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Powerup extends Item {
         super(parent, x, y, Player.Powerup.getTextureForPowerup(powerup));
 
         this.powerup = powerup;
-        this.time = POWERUP_MAX_TIMES.get(powerup);
+        this.time = POWERUP_MAX_TIMES[powerup.ordinal()];
     }
 
     /**
@@ -44,7 +44,7 @@ public class Powerup extends Item {
      * @return The max duration for a specific powerup
      */
     public static int getMaxPowerupTime(Player.Powerup powerup) {
-        return POWERUP_MAX_TIMES.get(powerup);
+        return POWERUP_MAX_TIMES[powerup.ordinal()];
     }
 
     @Override

@@ -68,9 +68,9 @@ public class Player extends Character {
     private int points = 0;
 
     /**
-     * Relates each powerup to its time left for the player to use it. 0.0 encodes not active
+     * Stores the time remaining of each powerup (a value of 0 or less means the powerup is not active).
      */
-    private HashMap<Powerup, Double> powerupRemainingTimes = new HashMap<Powerup, Double>();
+    private double[] powerupTimers = new double[Powerup.values.length];
 
     /**
      * Player's upgrade.
@@ -101,11 +101,6 @@ public class Player extends Character {
      */
     public Player(Round parent, double x, double y) {
         super(parent, x, y, PLAYER_HEALTH);
-
-        //Initialize powerup states
-        for (Powerup key : Powerup.values()) {
-            powerupRemainingTimes.put(key, 0.0);
-        }
     }
 
     /**
@@ -145,12 +140,12 @@ public class Player extends Character {
     }
 
     /**
-     * Get a map from powerups to time remaining
+     * Gets the times remaining for each powerup.
      *
-     * @return the current powerup
+     * @return the times remaining for each powerup
      */
-    public HashMap<Powerup, Double> getPowerups() {
-        return powerupRemainingTimes;
+    public double[] getPowerups() {
+        return powerupTimers;
     }
 
     /**
@@ -171,7 +166,7 @@ public class Player extends Character {
      */
     public void setPowerup(Powerup powerup, double time) {
         DuckGame.playSoundEffect(Assets.collect, 1);
-        powerupRemainingTimes.put(powerup, time);
+        powerupTimers[powerup.ordinal()] = time;
     }
 
     /**
@@ -180,7 +175,7 @@ public class Player extends Character {
      * @return the time remaining on the powerup
      */
     public double getPowerupTimeRemaining(Powerup powerup) {
-        return powerupRemainingTimes.get(powerup);
+        return powerupTimers[powerup.ordinal()];
     }
 
     /**
@@ -190,7 +185,7 @@ public class Player extends Character {
      * @return true if the powerup is currently active
      */
     public boolean powerupIsActive(Powerup powerup) {
-        return powerupRemainingTimes.get(powerup) > 0;
+        return powerupTimers[powerup.ordinal()] > 0;
     }
 
     /**
@@ -248,12 +243,10 @@ public class Player extends Character {
             PLAYER_SPEED = 200;
         }
 
-//    	 Decrement powerup timer for each powerup.
-        for (Player.Powerup key : powerupRemainingTimes.keySet()) {
-            if (powerupIsActive(key)) {
-                powerupRemainingTimes.put(key, powerupRemainingTimes.get(key) - delta);
-            } else {
-                powerupRemainingTimes.put(key, 0.0);
+        // Decrement powerup timer for each powerup.
+        for(int i = 0; i < powerupTimers.length; i++) {
+            if (powerupTimers[i] > 0) {
+                powerupTimers[i] -= delta;
             }
         }
 
@@ -371,7 +364,7 @@ public class Player extends Character {
     @Override
     public boolean collidesX(double deltaX) {
         // If the noclip cheat is on, or we are already colliding with something (i.e. stuck)
-        if (parent.getCheatProcessor().isNoclipCheatActive() || super.collidesX(0)) {
+        if (parent.getCheatProcessor().isNoclipActive() || super.collidesX(0)) {
             return false;
         }
 
@@ -387,7 +380,7 @@ public class Player extends Character {
     @Override
     public boolean collidesY(double deltaY) {
         // If the noclip cheat is on, or we are already colliding with something (i.e. stuck)
-        if (parent.getCheatProcessor().isNoclipCheatActive() || super.collidesY(0)) {
+        if (parent.getCheatProcessor().isNoclipActive() || super.collidesY(0)) {
             return false;
         }
 
@@ -425,6 +418,11 @@ public class Player extends Character {
         RATE_OF_FIRE,
         INVULNERABLE,
         REGENERATION;
+
+        /**
+         * Available powerups. This avoids having to use values() which re-creates the array every loop.
+         */
+        public static final Powerup[] values = values();
 
         /**
          * Gets a texture for this powerup's floor item.
