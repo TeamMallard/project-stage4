@@ -395,16 +395,15 @@ public class Player extends Character {
     @Override
     public void render(SpriteBatch spriteBatch) {
         // Use the right texture set.
-        // TODO: add textures for boss flying and with gun
         TextureSet textureSet;
         if (isFlying()) {
-            textureSet = Assets.playerFlying;
+            textureSet = isDemented() ? Assets.playerFlyingInv : Assets.playerFlying;
         } else if (this.getSwimming()) {
-            textureSet = isDemented() ? Assets.bossSwimming : Assets.playerSwimming;
+            textureSet = isDemented() ? Assets.playerSwimmingInv : Assets.playerSwimming;
         } else if (upgrade == Upgrade.GUN) {
-            textureSet = Assets.playerGun;
+            textureSet = isDemented() ? Assets.playerGunInv : Assets.playerGun;
         } else {
-            textureSet = isDemented() ? Assets.bossNormal : Assets.playerNormal;
+            textureSet = isDemented() ? Assets.playerNormalInv : Assets.playerNormal;
         }
 
         spriteBatch.draw(textureSet.getTexture(facing, stateTime), (int) x, (int) y);

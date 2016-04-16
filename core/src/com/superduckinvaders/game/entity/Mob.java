@@ -212,14 +212,14 @@ public class Mob extends Character {
             if (this.boss) {
                 textureSet = Assets.bossSwimming;
             } else {
-                textureSet = Assets.badGuySwimming;
+                textureSet = isDemented() ? Assets.badGuySwimmingInv : Assets.badGuySwimming;
             }
 
 
         } else if (this.isRanged()) {
-            textureSet = Assets.badGuyGun;
+            textureSet = isDemented() ? Assets.badGuyGunInv : Assets.badGuyGun;
         } else if (!this.boss) {
-            textureSet = Assets.badGuyNormal;
+            textureSet = isDemented() ? Assets.badGuyNormalInv : Assets.badGuyNormal;
         }
 
 

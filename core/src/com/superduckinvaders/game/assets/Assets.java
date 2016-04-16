@@ -30,6 +30,15 @@ public class Assets {
      */
     public static TextureSet badGuyNormal, badGuySwimming, badGuyGun;
 
+    /**
+     * Player demented texture sets.
+     */
+    public static TextureSet playerNormalInv, playerGunInv, playerFlyingInv, playerSwimmingInv;
+
+    /**
+     * Bad guy demented texture sets.
+     */
+    public static TextureSet badGuyNormalInv, badGuySwimmingInv, badGuyGunInv;
 
     /**
      * Boss texture sets
@@ -160,6 +169,10 @@ public class Assets {
         loadBossTextureSets();
         loadFloorItems();
 
+        // Load inverted textures for demented mode.
+        loadPlayerInvertedTextureSets();
+        loadBadGuyInvertedTextureSets();
+
         projectile = new TextureRegion(loadTexture("textures/projectile.png"));
 
         explosionAnimation = loadAnimation("textures/explosion.png", 2, 32, 0.3f);
@@ -274,6 +287,70 @@ public class Assets {
                 swimmingFront, swimmingBack, swimmingLeft, swimmingRight);
     }
 
+    /**
+     * Loads assets relating to the player in the normal state.
+     * If you change the player texture size, be sure to change the values here.
+     */
+    private static void loadPlayerInvertedTextureSets() {
+        // Load idle texture map.
+        Texture playerIdle = loadTexture("textures/inverted/player_idle_i.png");
+
+        // Cut idle textures from texture map.
+        TextureRegion front = new TextureRegion(playerIdle, 0 * 14, 0, 14, 18);
+        TextureRegion back = new TextureRegion(playerIdle, 1 * 14, 0, 14, 18);
+        TextureRegion left = new TextureRegion(playerIdle, 2 * 14, 0, 14, 18);
+        TextureRegion right = new TextureRegion(playerIdle, 3 * 14, 0, 14, 18);
+
+        // Load walking animations.
+        Animation walkingFront = loadAnimation("textures/inverted/player_walking_front_i.png", 4, 12, 0.2f);
+        Animation walkingBack = loadAnimation("textures/inverted/player_walking_back_i.png", 4, 12, 0.2f);
+        Animation walkingLeft = loadAnimation("textures/inverted/player_walking_left_i.png", 4, 14, 0.2f);
+        Animation walkingRight = loadAnimation("textures/inverted/player_walking_right_i.png", 4, 14, 0.2f);
+
+
+        // Load idle with gun texture map.
+        Texture playerIdleGun = loadTexture("textures/inverted/player_gun_idle_i.png");
+
+        // Cut idle with gun textures from texture map.
+        TextureRegion frontGun = new TextureRegion(playerIdleGun, 0 * 18, 0, 18, 18);
+        TextureRegion backGun = new TextureRegion(playerIdleGun, 1 * 18, 0, 18, 18);
+        TextureRegion leftGun = new TextureRegion(playerIdleGun, 2 * 18, 0, 18, 18);
+        TextureRegion rightGun = new TextureRegion(playerIdleGun, 3 * 18, 0, 18, 18);
+
+        // Load walking with gun animations.
+        Animation walkingFrontGun = loadAnimation("textures/inverted/player_gun_walking_front_i.png", 4, 18, 0.2f);
+        Animation walkingBackGun = loadAnimation("textures/inverted/player_gun_walking_back_i.png", 4, 18, 0.2f);
+        Animation walkingLeftGun = loadAnimation("textures/inverted/player_gun_walking_left_i.png", 4, 18, 0.2f);
+        Animation walkingRightGun = loadAnimation("textures/inverted/player_gun_walking_right_i.png", 4, 18, 0.2f);
+
+
+        // Load swimming texture map.
+        Texture swimmingIdle = new Texture("textures/inverted/player_swimming_idle_i.png");
+
+        // Cut idle swimming textures from texture map.
+        TextureRegion swimmingIdleFront = new TextureRegion(swimmingIdle, 0 * 14, 0, 14, 17);
+        TextureRegion swimmingIdleBack = new TextureRegion(swimmingIdle, 1 * 14, 0, 14, 17);
+        TextureRegion swimmingIdleLeft = new TextureRegion(swimmingIdle, 2 * 14, 0, 14, 17);
+        TextureRegion swimmingIdleRight = new TextureRegion(swimmingIdle, 3 * 14, 0, 14, 17);
+
+        //Load swimming animations.
+        Animation swimmingFront = loadAnimation("textures/inverted/player_swimming_front_i.png", 2, 14, 0.2f);
+        Animation swimmingBack = loadAnimation("textures/inverted/player_swimming_back_i.png", 2, 14, 0.2f);
+        Animation swimmingLeft = loadAnimation("textures/inverted/player_swimming_left_i.png", 2, 14, 0.2f);
+        Animation swimmingRight = loadAnimation("textures/inverted/player_swimming_right_i.png", 2, 14, 0.2f);
+
+        // Load flying animations.
+        Animation flyingFront = loadAnimation("textures/inverted/player_flying_front_i.png", 2, 18, 0.2f);
+        Animation flyingBack = loadAnimation("textures/inverted/player_flying_back_i.png", 2, 18, 0.2f);
+        Animation flyingLeft = loadAnimation("textures/inverted/player_flying_left_i.png", 2, 21, 0.2f);
+        Animation flyingRight = loadAnimation("textures/inverted/player_flying_right_i.png", 2, 21, 0.2f);
+
+        playerNormalInv = new TextureSet(front, back, left, right, walkingFront, walkingBack, walkingLeft, walkingRight);
+        playerGunInv = new TextureSet(frontGun, backGun, leftGun, rightGun, walkingFrontGun, walkingBackGun, walkingLeftGun, walkingRightGun);
+        playerFlyingInv = new TextureSet(front, back, left, right, flyingFront, flyingBack, flyingLeft, flyingRight);
+        playerSwimmingInv = new TextureSet(swimmingIdleFront, swimmingIdleBack, swimmingIdleLeft, swimmingIdleRight,
+                swimmingFront, swimmingBack, swimmingLeft, swimmingRight);
+    }
 
     private static void loadBossTextureSets() {
 
@@ -370,6 +447,62 @@ public class Assets {
         Animation gunWalkingRight = loadAnimation("textures/badguy_gun_walking_right.png", 4, 16, 0.3f);
 
         badGuyGun = new TextureSet(gunFront, gunBack, gunLeft, gunRight, gunWalkingFront, gunWalkingBack, gunWalkingLeft, gunWalkingRight);
+    }
+
+    /**
+     * Loads the textures from the bad guy textures file.
+     */
+    private static void loadBadGuyInvertedTextureSets() {
+        // Load idle texture map.
+        Texture badGuyIdle = loadTexture("textures/inverted/badguy_idle_i.png");
+
+        // Cut idle textures from texture map.
+        TextureRegion front = new TextureRegion(badGuyIdle, 0 * 21, 0, 21, 24);
+        TextureRegion back = new TextureRegion(badGuyIdle, 1 * 21, 0, 21, 24);
+        TextureRegion left = new TextureRegion(badGuyIdle, 2 * 21, 0, 21, 24);
+        TextureRegion right = new TextureRegion(badGuyIdle, 3 * 21, 0, 21, 24);
+
+        // Load walking animations.
+        Animation walkingFront = loadAnimation("textures/inverted/badguy_walking_front_i.png", 4, 21, 0.2f);
+        Animation walkingBack = loadAnimation("textures/inverted/badguy_walking_back_i.png", 4, 21, 0.2f);
+        Animation walkingLeft = loadAnimation("textures/inverted/badguy_walking_left_i.png", 4, 16, 0.2f);
+        Animation walkingRight = loadAnimation("textures/inverted/badguy_walking_right_i.png", 4, 16, 0.2f);
+
+        badGuyNormalInv = new TextureSet(front, back, left, right, walkingFront, walkingBack, walkingLeft, walkingRight);
+
+        // Load idle texture map.
+        Texture badGuySwimmingIdle = loadTexture("textures/inverted/badguy_idle_swimming_i.png");
+
+        // Cut idle textures from texture map.
+        TextureRegion swimmingIdleFront = new TextureRegion(badGuySwimmingIdle, 0 * 21, 0, 21, 24);
+        TextureRegion swimmingIdleBack = new TextureRegion(badGuySwimmingIdle, 1 * 21, 0, 21, 24);
+        TextureRegion swimmingIdleLeft = new TextureRegion(badGuySwimmingIdle, 2 * 21, 0, 21, 24);
+        TextureRegion swimmingIdleRight = new TextureRegion(badGuySwimmingIdle, 3 * 21, 0, 21, 24);
+
+        // Load walking animations.
+        Animation swimmingFront = loadAnimation("textures/inverted/badguy_swimming_front_i.png", 4, 21, 0.2f);
+        Animation swimmingBack = loadAnimation("textures/inverted/badguy_swimming_back_i.png", 4, 21, 0.2f);
+        Animation swimmingLeft = loadAnimation("textures/inverted/badguy_swimming_left_i.png", 4, 16, 0.2f);
+        Animation swimmingRight = loadAnimation("textures/inverted/badguy_swimming_right_i.png", 4, 16, 0.2f);
+
+        badGuySwimmingInv = new TextureSet(swimmingIdleFront, swimmingIdleBack, swimmingIdleLeft, swimmingIdleRight, swimmingFront, swimmingBack, swimmingLeft, swimmingRight);
+
+        // Load idle texture map.
+        Texture badGuyGunIdle = loadTexture("textures/inverted/badguy_gun_idle_i.png");
+
+        // Cut idle textures from texture map.
+        TextureRegion gunFront = new TextureRegion(badGuyGunIdle, 0 * 21, 0, 21, 24);
+        TextureRegion gunBack = new TextureRegion(badGuyGunIdle, 1 * 21, 0, 21, 24);
+        TextureRegion gunLeft = new TextureRegion(badGuyGunIdle, 2 * 21, 0, 21, 24);
+        TextureRegion gunRight = new TextureRegion(badGuyGunIdle, 3 * 21, 0, 21, 24);
+
+        // Load walking animations.
+        Animation gunWalkingFront = loadAnimation("textures/inverted/badguy_gun_walking_front_i.png", 4, 21, 0.3f);
+        Animation gunWalkingBack = loadAnimation("textures/inverted/badguy_gun_walking_back_i.png", 4, 21, 0.3f);
+        Animation gunWalkingLeft = loadAnimation("textures/inverted/badguy_gun_walking_left_i.png", 4, 16, 0.3f);
+        Animation gunWalkingRight = loadAnimation("textures/inverted/badguy_gun_walking_right_i.png", 4, 16, 0.3f);
+
+        badGuyGunInv = new TextureSet(gunFront, gunBack, gunLeft, gunRight, gunWalkingFront, gunWalkingBack, gunWalkingLeft, gunWalkingRight);
     }
 
 
