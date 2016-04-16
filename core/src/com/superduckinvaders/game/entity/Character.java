@@ -24,12 +24,12 @@ public abstract class Character extends Entity {
      * The state time for the animation. Set to 0 for not moving.
      */
     protected float stateTime = 0;
-    
+
     /**
      * The state time for the animation. Set to 0 for not moving.
      */
     protected float dementedTimer = 0;
-    
+
     /**
      * The state time for the animation. Set to 0 for not moving.
      */
@@ -167,11 +167,8 @@ public abstract class Character extends Entity {
     public void checkSwimming() {
         int tileWidth = parent.getTileWidth();
         TiledMapTileLayer water = (TiledMapTileLayer) parent.getMap().getLayers().get("Water");
-        if (water.getCell((int) x / tileWidth, (int) y / tileWidth) != null) {
-            isSwimming = true;
-        } else {
-            isSwimming = false;
-        }
+
+        isSwimming = water.getCell((int) x / tileWidth, (int) y / tileWidth) != null;
     }
 
     /**
@@ -181,6 +178,14 @@ public abstract class Character extends Entity {
      */
     public boolean getSwimming() {
         return isSwimming;
+    }
+
+    /**
+     * Gets whether this Character is currently demented or not.
+     * @return true if the Character is demented
+     */
+    public boolean isDemented() {
+        return dementedTimer < 0;
     }
 
 
@@ -197,13 +202,15 @@ public abstract class Character extends Entity {
 
         // Update demented timer.
         dementedTimer += delta;
-        System.out.println((int) MathUtils.random(0, (int) 2000-dementedTimer));
+
+        System.out.println((int) MathUtils.random(0, 2000 - dementedTimer));
         System.out.println(dementedTimer);
-        if((int)MathUtils.random(0, (int) 2000-dementedTimer) == 0) {
-        	dementedTimer = -10;
-        	dementedState = MathUtils.random(0,3);
+
+        if ((int) MathUtils.random(0, 2000 - dementedTimer) == 0) {
+            dementedTimer = -10;
+            dementedState = MathUtils.random(0, 3);
         }
-        
+
         // Update Character facing.
         if (velocityX < 0) {
             facing = TextureSet.FACING_LEFT;

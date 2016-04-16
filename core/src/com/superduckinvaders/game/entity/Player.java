@@ -324,7 +324,7 @@ public class Player extends Character {
                 velocityY = 0;
             }
             
-            if(dementedTimer < 0) {
+            if(isDemented()) {
             	if(dementedState == 0) {
             		double tempVelX = velocityX;
             		velocityX = velocityY;
@@ -395,15 +395,16 @@ public class Player extends Character {
     @Override
     public void render(SpriteBatch spriteBatch) {
         // Use the right texture set.
+        // TODO: add textures for boss flying and with gun
         TextureSet textureSet;
         if (isFlying()) {
             textureSet = Assets.playerFlying;
         } else if (this.getSwimming()) {
-            textureSet = Assets.playerSwimming;
+            textureSet = isDemented() ? Assets.bossSwimming : Assets.playerSwimming;
         } else if (upgrade == Upgrade.GUN) {
             textureSet = Assets.playerGun;
         } else {
-            textureSet = Assets.playerNormal;
+            textureSet = isDemented() ? Assets.bossNormal : Assets.playerNormal;
         }
 
         spriteBatch.draw(textureSet.getTexture(facing, stateTime), (int) x, (int) y);
