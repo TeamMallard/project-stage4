@@ -151,6 +151,17 @@ public class Mob extends Character {
     public void update(float delta) {
         ai.update(this, delta);
         float random = MathUtils.random();
+        
+        if(lastDementedTimer < 0 && dementedTimer > 0) {
+        	System.out.println("test");
+        	for(int x = -1; x <= 1; x++) {
+            	for(int y = -1; x <= 1; x++) {
+            		if(!(x == 0 && y == 0)) {
+            			fireAt(this.x + (5*x), this.y + (5*y), 300, 1);
+            		}
+            	}
+        	}
+        }
 
         //if mob is ranged, fire projectile with given probability.
         //mobs can't fire in water (balance decision)

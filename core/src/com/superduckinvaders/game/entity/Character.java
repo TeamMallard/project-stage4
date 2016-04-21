@@ -26,6 +26,11 @@ public abstract class Character extends Entity {
     protected float stateTime = 0;
 
     /**
+     * The last state time for the animation. Set to 0 for not moving.
+     */
+    protected float lastDementedTimer = 0;
+    
+    /**
      * The state time for the animation. Set to 0 for not moving.
      */
     protected float dementedTimer = 0;
@@ -201,10 +206,9 @@ public abstract class Character extends Entity {
         checkSwimming();
 
         // Update demented timer.
+        lastDementedTimer = dementedTimer;
         dementedTimer += delta;
 
-        System.out.println((int) MathUtils.random(0, 2000 - dementedTimer));
-        System.out.println(dementedTimer);
 
         if ((int) MathUtils.random(0, 2000 - dementedTimer) == 0) {
             dementedTimer = -10;
