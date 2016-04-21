@@ -50,6 +50,7 @@ public class CheatProcessor implements InputProcessor {
 
     /**
      * Creates a new CheatProcessor.
+     *
      * @param parent the round this CheatProcessor belongs to
      */
     public CheatProcessor(Round parent) {
@@ -100,7 +101,7 @@ public class CheatProcessor implements InputProcessor {
                     powerupTimer = CHEAT_ACTIVATION_TIME + CHEAT_COOLDOWN_TIME;
 
                     // Simply add all powerups to a player for the activation time.
-                    for(Player.Powerup powerup : Player.Powerup.values()) {
+                    for (Player.Powerup powerup : Player.Powerup.values()) {
                         parent.getPlayer().setPowerup(powerup, CHEAT_ACTIVATION_TIME);
                     }
 

@@ -24,7 +24,7 @@ import com.superduckinvaders.game.assets.Assets;
 public class LevelSelectScreen implements Screen {
 
     /**
-     * The DuckGame this StartScreen belongs to.
+     * The DuckGame this LevelSelectScreen belongs to.
      */
     private DuckGame parent;
 
@@ -34,7 +34,7 @@ public class LevelSelectScreen implements Screen {
     private Stage stage;
 
     /**
-     * Initialises this StartScreen.
+     * Initialises this LevelSelectScreen.
      *
      * @param parent the game the screen is associated with
      */
@@ -44,7 +44,7 @@ public class LevelSelectScreen implements Screen {
     }
 
     /**
-     * Shows this GameScreen. Called by libGDX to set up the graphics.
+     * Shows this LevelSelectScreen. Called by libGDX to set up the graphics.
      */
     @Override
     public void show() {
@@ -313,7 +313,6 @@ public class LevelSelectScreen implements Screen {
         stage.addActor(playLabelSeven);
         stage.addActor(playButtonEight);
         stage.addActor(playLabelEight);
-
     }
 
     /**
@@ -331,8 +330,10 @@ public class LevelSelectScreen implements Screen {
     }
 
     /**
-     * We now have the technology to resize the game.
-     * Gressingham4lyf
+     * Called when the game window is resized.
+     *
+     * @param width  the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {

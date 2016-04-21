@@ -115,7 +115,10 @@ public class WinScreen implements Screen {
     }
 
     /**
-     * Not used since the game window cannot be resized.
+     * Called when the game window is resized.
+     *
+     * @param width  the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {

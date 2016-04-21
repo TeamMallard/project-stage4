@@ -132,8 +132,10 @@ public class StartScreen implements Screen {
     }
 
     /**
-     * We now have the technology to resize the game.
-     * Gressingham4lyf
+     * Called when the game window is resized.
+     *
+     * @param width  the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {

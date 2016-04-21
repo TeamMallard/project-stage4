@@ -98,8 +98,6 @@ public class Projectile extends Entity {
 
         // Check for collisions with blocked tiles and the map boundary.
         if (collidesX(deltaX) || collidesY(deltaY) || x + deltaX < 0 || x + getWidth() + deltaX > parent.getMapWidth() || y + deltaY < 0 || y + getHeight() + deltaY > parent.getMapHeight()) {
-            // Create explosion particle effect.
-
             removed = true;
             return;
         }

@@ -23,20 +23,24 @@ import com.superduckinvaders.game.assets.Assets;
 public class SettingsScreen implements Screen {
 
     /**
-     * volume variables
+     * Volume levels.
      */
     private int masterVol, sfxVol, musicVol;
 
     /**
-     * level progress string
+     * Level progress string.
      */
     private String levelsComplete;
 
     /**
-     * The DuckGame this StartScreen belongs to.
+     * Whether demented mode is active or not.
+     */
+    private boolean dementedMode = false;
+
+    /**
+     * The DuckGame this SettingsScreen belongs to.
      */
     private DuckGame parent;
-
 
     /**
      * Stage for containing the button.
@@ -44,7 +48,7 @@ public class SettingsScreen implements Screen {
     private Stage stage;
 
     /**
-     * Initialises this StartScreen.
+     * Initialises this SettingsScreen.
      *
      * @param parent the game the screen is associated with
      */
@@ -57,11 +61,11 @@ public class SettingsScreen implements Screen {
      */
     @Override
     public void show() {
-
-        masterVol = (int) (DuckGame.MasterVol * 100);
-        sfxVol = (int) (DuckGame.SfxVol * 100);
-        musicVol = (int) (DuckGame.MusicVol * 100);
+        masterVol = (int) (DuckGame.masterVolume * 100);
+        sfxVol = (int) (DuckGame.sfxVolume * 100);
+        musicVol = (int) (DuckGame.musicVolume * 100);
         levelsComplete = DuckGame.levelsComplete;
+        dementedMode = DuckGame.dementedMode;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -73,7 +77,6 @@ public class SettingsScreen implements Screen {
         final Label title = new Label("Settings", white);
         title.setPosition((stage.getWidth() - title.getPrefWidth()) / 2, (stage.getHeight() - title.getPrefHeight()) / 2 + 200);
         title.setTouchable(Touchable.disabled);
-
 
         final Label masterVolTitle = new Label("Master Vol: ", white);
         masterVolTitle.setPosition((stage.getWidth() - masterVolTitle.getPrefWidth()) / 2 - 200, (stage.getHeight() - masterVolTitle.getPrefHeight()) / 2);
@@ -113,15 +116,13 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (masterVol >= 100) {
-
-                } else {
+                if (masterVol < 100) {
                     masterVol += 5;
                 }
+
+
                 applySettings();
                 masterVolLabel.setText(Integer.toString(masterVol));
-
-
                 stage.draw();
             }
         });
@@ -132,11 +133,10 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (masterVol <= 0) {
-
-                } else {
+                if (masterVol > 0) {
                     masterVol -= 5;
                 }
+
                 applySettings();
 
                 masterVolLabel.setText(Integer.toString(masterVol));
@@ -155,15 +155,13 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (sfxVol >= 100) {
-
-                } else {
+                if (sfxVol < 100) {
                     sfxVol += 5;
                 }
+
                 applySettings();
+
                 sfxVolLabel.setText(Integer.toString(sfxVol));
-
-
                 stage.draw();
             }
         });
@@ -174,11 +172,10 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (sfxVol <= 0) {
-
-                } else {
+                if (sfxVol > 0) {
                     sfxVol -= 5;
                 }
+
                 applySettings();
 
                 sfxVolLabel.setText(Integer.toString(sfxVol));
@@ -196,15 +193,13 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (musicVol >= 100) {
-
-                } else {
+                if (musicVol < 100) {
                     musicVol += 5;
                 }
+
                 applySettings();
+
                 musicVolLabel.setText(Integer.toString(musicVol));
-
-
                 stage.draw();
             }
         });
@@ -215,14 +210,40 @@ public class SettingsScreen implements Screen {
 
             public void clicked(InputEvent event, float x, float y) {
                 DuckGame.playSoundEffect(Assets.buttonPress, 1);
-                if (musicVol <= 0) {
-
-                } else {
+                if (musicVol > 0) {
                     musicVol -= 5;
                 }
+
                 applySettings();
 
                 musicVolLabel.setText(Integer.toString(musicVol));
+                stage.draw();
+            }
+        });
+
+        // Added button for enabling/disabling demented mode.
+        final Label dementedTitle = new Label("Demented Mode: ", white);
+        dementedTitle.setPosition((stage.getWidth() - dementedTitle.getPrefWidth()) / 2 - 200, (stage.getHeight() - dementedTitle.getPrefHeight()) / 2 - 240);
+        dementedTitle.setTouchable(Touchable.disabled);
+
+
+        final Label dementedStatusLabel = new Label(dementedMode ? "ON" : "OFF", white);
+        dementedStatusLabel.setPosition((stage.getWidth() - dementedStatusLabel.getPrefWidth()) / 2, (stage.getHeight() - dementedStatusLabel.getPrefHeight()) / 2 - 240);
+        dementedStatusLabel.setTouchable(Touchable.disabled);
+
+        final Button dementedButton = new Button(new Button.ButtonStyle(buttonBack, buttonBack, buttonBack));
+        dementedButton.setPosition((stage.getWidth() - dementedButton.getPrefWidth()) / 2, (stage.getHeight() - dementedButton.getPrefHeight()) / 2 - 240);
+        dementedButton.addListener(new ClickListener() {
+
+            public void clicked(InputEvent event, float x, float y) {
+                DuckGame.playSoundEffect(Assets.buttonPress, 1);
+
+                // Invert demented mode.
+                dementedMode = !dementedMode;
+
+                applySettings();
+
+                dementedStatusLabel.setText(dementedMode ? "ON" : "OFF");
                 stage.draw();
             }
         });
@@ -242,7 +263,9 @@ public class SettingsScreen implements Screen {
         stage.addActor(masterUp);
         stage.addActor(masterDown);
         stage.addActor(masterVolLabel);
-
+        stage.addActor(dementedTitle);
+        stage.addActor(dementedButton);
+        stage.addActor(dementedStatusLabel);
     }
 
     /**
@@ -259,8 +282,10 @@ public class SettingsScreen implements Screen {
     }
 
     /**
-     * We now have the technology to resize the game.
-     * Gressingham4lyf
+     * Called when the game window is resized.
+     *
+     * @param width  the new width
+     * @param height the new height
      */
     @Override
     public void resize(int width, int height) {
@@ -268,7 +293,7 @@ public class SettingsScreen implements Screen {
     }
 
     /**
-     * Checks for esc keypress and returns to main menu
+     * Checks for escape key press and returns to main menu.
      */
     public void update() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -308,13 +333,14 @@ public class SettingsScreen implements Screen {
     }
 
     /**
-     * applys the settings values created here to the settings file
+     * Applies the settings values created here to the settings file.
      */
     public void applySettings() {
-        DuckGame.MasterVol = (float) masterVol / 100;
-        DuckGame.SfxVol = (float) sfxVol / 100;
-        DuckGame.MusicVol = (float) musicVol / 100;
+        DuckGame.masterVolume = (float) masterVol / 100;
+        DuckGame.sfxVolume = (float) sfxVol / 100;
+        DuckGame.musicVolume = (float) musicVol / 100;
         DuckGame.levelsComplete = levelsComplete;
+        DuckGame.dementedMode = dementedMode;
         DuckGame.saveSettings();
     }
 }

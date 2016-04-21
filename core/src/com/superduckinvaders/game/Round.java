@@ -45,7 +45,7 @@ public final class Round {
     /**
      * How near entities must be to the player to get updated in the game loop.
      */
-    public static final int UPDATE_DISTANCE = DuckGame.GAME_WIDTH / 2;
+    private static final int UPDATE_DISTANCE = DuckGame.GAME_WIDTH / 2;
 
     /**
      * Double indicating the chance of spawning a ranged mob.
@@ -403,7 +403,6 @@ public final class Round {
      * @param x       the x coordinate of the powerup
      * @param y       the y coordinate of the powerup
      * @param powerup the powerup to grant to the player
-     * @param time    how long the powerup should last for
      */
     public void createPowerup(double x, double y, Player.Powerup powerup) {
         entities.add(new Powerup(this, x, y, powerup));
@@ -513,7 +512,7 @@ public final class Round {
 
             // for each entity update target position x and y with player x and y.
             if (entity instanceof Mob) {
-                if ((boolean) ((Mob) entity).isRanged()) {
+                if (((Mob) entity).isRanged()) {
                     ((Mob) entity).updateTargetPosition(player.getX(), player.getY());
                 }
             }
@@ -542,9 +541,9 @@ public final class Round {
                     }
 
                     parent.getGameScreen().addAnimatedText("+" + Integer.toString(scoreToAdd), (float) (entity.getX() - entity.getWidth() / 2), (float) entity.getY() + entity.getHeight(), textColor);
-                    //respawn killed enemies on SurviveObjective
+                    // Respawn killed enemies on SurviveObjective
                     if (getObjectiveType() == Objective.SURVIVE_OBJECTIVE) {
-                        //spawns 2 mobs for every 1 you kill. Levels get progressivley harder
+                        // Spawns 2 mobs for every 1 you kill. Levels get progressively harder
                         spawnRandomMobs(2, 100, 100, 300, 300);
                         System.out.println(mobCount);
                     }
@@ -557,7 +556,6 @@ public final class Round {
     }
 
     private void updateObjective(float delta) {
-        // TODO Fix bug where replaying previously completed level wipes game progress.
         if (objective != null) {
             objective.update(delta);
 
@@ -566,7 +564,7 @@ public final class Round {
                 DuckGame.stopMusic();
                 DuckGame.playSoundEffect(Assets.levelComplete, 1);
 
-                //if game not already completed
+                // If game not already completed
                 if (!DuckGame.levelsComplete.equals("11111111")) {
                     if (map.equals(Assets.levelOneMap)) {
                         DuckGame.levelsComplete = "1000000";
@@ -595,12 +593,12 @@ public final class Round {
                         parent.showWinScreen(player.getScore());
                     }
 
-                    //game already completed so don't record score and just display game complete screen
+                    // Game already completed so don't record score and just display game complete screen
                 } else {
                     parent.showCompleteScreen();
                 }
 
-                //always save the settings
+                // Always save the settings
                 DuckGame.saveSettings();
 
             } else if (player.isDead()) {
@@ -610,7 +608,7 @@ public final class Round {
             }
         }
 
-        //spawn boss at specified time
+        // Spawn boss at specified time
         if (getObjectiveType() == Objective.SURVIVE_OBJECTIVE) {
             SurviveObjective surviveObjective = ((SurviveObjective) objective);
             if (surviveObjective.getTimeRemaining() < surviveObjective.getBossSpawnTime()) {
@@ -630,11 +628,10 @@ public final class Round {
      * @param delta the time elapsed since the last update
      */
     public void update(float delta) {
-
         updateObjective(delta);
-
         updateEntities(delta);
 
+        // Update cheat timers, etc.
         cheatProcessor.update(delta);
     }
 

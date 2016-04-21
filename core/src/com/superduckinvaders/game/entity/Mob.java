@@ -1,4 +1,3 @@
-
 package com.superduckinvaders.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +14,11 @@ import com.superduckinvaders.game.assets.TextureSet;
 public class Mob extends Character {
 
     /**
+     * The chance that a Mob will fire a projectile each frame.
+     */
+    private static final double RANGED_CHANGE = 0.01;
+
+    /**
      * The texture set to use for this Mob.
      */
     private TextureSet textureSet;
@@ -29,28 +33,25 @@ public class Mob extends Character {
      */
     private int speed;
 
-
+    /**
+     * The speed at which this mob walks, in pixels per second.
+     */
     private int walkSpeed;
+
     /**
      * Boolean indicating whether or not the mob is a ranged mob.
      */
     private boolean ranged;
 
     /**
-     * Boolean indicating whether or not the mob is a boss.
+     * Whether or not this Mob is a boss.
      */
     private boolean boss;
-
 
     /**
      * Doubles indicating the position x,y of the ranged mob target.
      */
     private double targetX, targetY;
-
-    /**
-     * Double indicating the chance a mob has to fire a projectile.
-     */
-    private double MOB_FIRERATE = 0.01;
 
     /**
      * Constructor for a Mob character.
@@ -72,37 +73,12 @@ public class Mob extends Character {
         this.ai = ai;
         this.boss = boss;
 
-        //there are no ranged bosses
-        if (this.boss) {
-            this.ranged = false;
-            MOB_FIRERATE = 1;
-        } else {
-            this.ranged = ranged;
-        }
-
-
+        // There are no ranged bosses.
+        this.ranged = !this.boss && ranged;
     }
 
     public Mob(Round parent, int x, int y, int health, TextureSet textureSet, int speed) {
         this(parent, x, y, health, textureSet, speed, new DummyAI(parent), false, false);
-    }
-
-    /**
-     * Sets the AI for this Mob.
-     *
-     * @param ai the new AI to use
-     */
-    public void setAI(AI ai) {
-        this.ai = ai;
-    }
-
-    /**
-     * Sets the speed of the mob
-     *
-     * @param newSpeed the updated speed
-     */
-    public void setSpeed(int newSpeed) {
-        this.speed = newSpeed;
     }
 
     /**
@@ -139,6 +115,12 @@ public class Mob extends Character {
         return textureSet.getTexture(TextureSet.FACING_FRONT, 0).getRegionHeight();
     }
 
+    /**
+     * Updates the ranged target position of this Mob.
+     *
+     * @param x the new x coordinate of the target
+     * @param y the new y coordinate of the target
+     */
     public void updateTargetPosition(double x, double y) {
         targetX = x;
         targetY = y;
@@ -151,33 +133,33 @@ public class Mob extends Character {
     public void update(float delta) {
         ai.update(this, delta);
         float random = MathUtils.random();
-        
-        if(lastDementedTimer < 0 && dementedTimer > 0) {
-        	System.out.println("test");
-        	for(int x = -1; x <= 1; x++) {
-            	for(int y = -1; y <= 1; y++) {
-            		if(!(x == 0 && y == 0)) {
-            			fireAt(this.x + getWidth() / 2 + x, this.y + getHeight() / 2 + y, 300, 1);
-            		}
-            	}
-        	}
+
+        if (lastDementedTimer < 0 && dementedTimer > 0) {
+            System.out.println("test");
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+                    if (!(x == 0 && y == 0)) {
+                        fireAt(this.x + getWidth() / 2 + x, this.y + getHeight() / 2 + y, 300, 1);
+                    }
+                }
+            }
         }
 
-        //if mob is ranged, fire projectile with given probability.
-        //mobs can't fire in water (balance decision)
-        if (random < MOB_FIRERATE && ranged && !this.isSwimming) {
+        // If mob is ranged, fire projectile with given probability.
+        // Mobs can't fire in water.
+        if (random < RANGED_CHANGE && ranged && !this.isSwimming) {
             fireAt(targetX, targetY, 300, 1);
         }
 
-
+        // Slow mob down in water.
         if (this.getSwimming()) {
             speed = walkSpeed / 2;
         } else {
             speed = walkSpeed;
         }
+
         // Chance of spawning a random powerup.
         if (isDead()) {
-            //float random = MathUtils.random();
             Player.Powerup powerup = null;
 
             if (random < 0.05) {

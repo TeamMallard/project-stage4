@@ -10,8 +10,6 @@ import com.superduckinvaders.game.Round;
 import com.superduckinvaders.game.assets.Assets;
 import com.superduckinvaders.game.assets.TextureSet;
 
-import java.util.HashMap;
-
 /**
  * Represents the player of the game.
  */
@@ -244,7 +242,7 @@ public class Player extends Character {
         }
 
         // Decrement powerup timer for each powerup.
-        for(int i = 0; i < powerupTimers.length; i++) {
+        for (int i = 0; i < powerupTimers.length; i++) {
             if (powerupTimers[i] > 0) {
                 powerupTimers[i] -= delta;
             }
@@ -269,7 +267,6 @@ public class Player extends Character {
                     facing = directionTo(target.x, target.y);
                     fireAt(target.x, target.y, 300, 100);
                 } else {
-                    // TODO: tweak melee range
                     melee(100, 100);
                 }
             }
@@ -323,25 +320,25 @@ public class Player extends Character {
             } else {
                 velocityY = 0;
             }
-            
-            if(isDemented()) {
-            	if(dementedState == 0) {
-            		double tempVelX = velocityX;
-            		velocityX = velocityY;
-            		velocityY = tempVelX;
-            	} else if(dementedState == 1) {
-            		double tempVelX = velocityX;
-            		velocityX = velocityY;
-            		velocityY = -tempVelX;
-            	} else if(dementedState == 2) {
-            		double tempVelX = velocityX;
-            		velocityX = -velocityY;
-            		velocityY = tempVelX;
-            	} else if(dementedState == 3) {
-            		double tempVelX = velocityX;
-            		velocityX = -velocityY;
-            		velocityY = -tempVelX;
-            	}
+
+            if (isDemented()) {
+                if (dementedState == 0) {
+                    double tempVelX = velocityX;
+                    velocityX = velocityY;
+                    velocityY = tempVelX;
+                } else if (dementedState == 1) {
+                    double tempVelX = velocityX;
+                    velocityX = velocityY;
+                    velocityY = -tempVelX;
+                } else if (dementedState == 2) {
+                    double tempVelX = velocityX;
+                    velocityX = -velocityY;
+                    velocityY = tempVelX;
+                } else if (dementedState == 3) {
+                    double tempVelX = velocityX;
+                    velocityX = -velocityY;
+                    velocityY = -tempVelX;
+                }
             }
 
             // If moving diagonally, move slower.

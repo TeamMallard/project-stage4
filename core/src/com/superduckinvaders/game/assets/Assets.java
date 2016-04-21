@@ -61,11 +61,6 @@ public class Assets {
     public static TextureRegion staminaFull, staminaEmpty;
 
     /**
-     * Texture for powerup backboard.
-     */
-    public static Texture powerupBackboard;
-
-    /**
      * Animation for explosion.
      */
     public static Animation explosionAnimation;
@@ -210,7 +205,6 @@ public class Assets {
         staminaFull = new TextureRegion(stamina, 0, 0, stamina.getWidth(), stamina.getHeight() / 2);
         staminaEmpty = new TextureRegion(stamina, 0, stamina.getHeight() / 2, stamina.getWidth(), stamina.getHeight() / 2);
 
-        powerupBackboard = new Texture("textures/powerupBackboard.png");
         button = new TextureRegion(loadTexture("textures/button.png"));
         buttonLocked = new TextureRegion(loadTexture("textures/buttonLocked.png"));
         downButton = new TextureRegion(loadTexture("textures/down.png"));

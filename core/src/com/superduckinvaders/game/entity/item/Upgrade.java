@@ -9,7 +9,7 @@ import com.superduckinvaders.game.entity.Player;
 public class Upgrade extends Item {
 
     /**
-     * The specific upgrade the object of type Upgrade gives you. Such as a gun
+     * The specific upgrade this Upgrade item grants.
      */
     private Player.Upgrade upgrade;
 

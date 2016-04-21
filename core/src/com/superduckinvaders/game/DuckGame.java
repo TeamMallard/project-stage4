@@ -16,23 +16,27 @@ import java.io.IOException;
 public class DuckGame extends Game {
 
     /**
-     * Volume values for the settings
+     * Volume levels for the settings.
      */
-    public static float MasterVol, SfxVol, MusicVol;
+    public static float masterVolume, sfxVolume, musicVolume;
 
     /**
-     * level progress for the settings file
+     * Level progress for the settings file.
      */
     public static String levelsComplete;
 
     /**
-     * required to efficiently dispose of sound files
+     * Whether demented mode is activated or not in the settings.
+     */
+    public static boolean dementedMode = false;
+
+    /**
+     * Required to efficiently dispose of sound files.
      */
     public static Sound currentMusic;
 
-
     /**
-     * required to efficiently dispose of settings Screen
+     * Required to efficiently dispose of settings Screen.
      */
     private SettingsScreen settingsScreen = null;
 
@@ -62,10 +66,9 @@ public class DuckGame extends Game {
     private GameScreen gameScreen = null;
 
     /**
-     * Stores the Screen displayed for selecting levels
+     * Stores the Screen displayed for selecting levels.
      */
     private LevelSelectScreen levelSelectScreen = null;
-
 
     /**
      * Stores the Screen displayed when a level has been won
@@ -207,10 +210,10 @@ public class DuckGame extends Game {
     public static void loadSettings() {
         FileHandle handle;
 
-        boolean fileExistance = Gdx.files.external("Saves/Settings.ini").exists();
+        boolean fileExists = Gdx.files.external("Saves/Settings.ini").exists();
 
         //if the file doesn't exit, make it
-        if (fileExistance == false) {
+        if (!fileExists) {
             String path = Gdx.files.getExternalStoragePath() + "/Saves/Settings.ini";
             // Use relative path for Unix systems
             File f = new File(path);
@@ -223,7 +226,6 @@ public class DuckGame extends Game {
                 handle.writeString("levelsComplete=00000000\nMaster=1.0f\nSFX=1.0f\nMusic=1.0f\nScore=0", false);
 
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -234,9 +236,9 @@ public class DuckGame extends Game {
 
         //extract levels, score and volumes.
         levelsComplete = lines[0].substring(15);
-        MasterVol = Float.parseFloat(lines[1].substring(7));
-        SfxVol = Float.parseFloat(lines[2].substring(4));
-        MusicVol = Float.parseFloat(lines[3].substring(6));
+        masterVolume = Float.parseFloat(lines[1].substring(7));
+        sfxVolume = Float.parseFloat(lines[2].substring(4));
+        musicVolume = Float.parseFloat(lines[3].substring(6));
         totalScore = Integer.parseInt(lines[4].substring(6));
     }
 
@@ -247,9 +249,9 @@ public class DuckGame extends Game {
         FileHandle handle;
         handle = Gdx.files.external("Saves/Settings.ini");
         handle.writeString("levelsComplete=" + levelsComplete +
-                "\nMaster=" + Float.toString(MasterVol) +
-                "\nSFX=" + Float.toString(SfxVol) +
-                "\nMusic=" + Float.toString(MusicVol) +
+                "\nMaster=" + Float.toString(masterVolume) +
+                "\nSFX=" + Float.toString(sfxVolume) +
+                "\nMusic=" + Float.toString(musicVolume) +
                 "\nScore=" + Integer.toString(totalScore), false);
     }
 
@@ -262,9 +264,9 @@ public class DuckGame extends Game {
         handle = Gdx.files.external("Saves/Settings.ini");
         //creates default settings file
         handle.writeString("levelsComplete=00000000" +
-                "\nMaster=" + Float.toString(MasterVol) +
-                "\nSFX=" + Float.toString(SfxVol) +
-                "\nMusic=" + Float.toString(MusicVol) +
+                "\nMaster=" + Float.toString(masterVolume) +
+                "\nSFX=" + Float.toString(sfxVolume) +
+                "\nMusic=" + Float.toString(musicVolume) +
                 "\nScore=0", false);
     }
 
@@ -274,10 +276,10 @@ public class DuckGame extends Game {
      * @param music the music file to be played
      */
     public static void playMusic(Sound music) {
-        if (MusicVol != 0 && MasterVol != 0) {
+        if (musicVolume != 0 && masterVolume != 0) {
             if (currentMusic != null) currentMusic.stop();
             currentMusic = music;
-            currentMusic.loop(MasterVol * MusicVol);
+            currentMusic.loop(masterVolume * musicVolume);
         }
     }
 
@@ -295,8 +297,8 @@ public class DuckGame extends Game {
      * @param volumeMultiplier can be used to increase sound of particularly quiet files
      */
     public static void playSoundEffect(Sound sound, float volumeMultiplier) {
-        if (SfxVol != 0 && MasterVol != 0) {
-            sound.play(MasterVol * SfxVol * volumeMultiplier);
+        if (sfxVolume != 0 && masterVolume != 0) {
+            sound.play(masterVolume * sfxVolume * volumeMultiplier);
         }
     }
 

@@ -44,8 +44,6 @@ public class RoundTest {
         }
     }
 
-    //TODO Note there are issues with round testing due to concurrent computation of round in libGDX
-
     @Test
     public void spawningTest() {
         int expectedMobCount = testRound.getEntities().size();

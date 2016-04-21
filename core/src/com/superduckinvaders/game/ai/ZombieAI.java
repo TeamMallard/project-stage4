@@ -1,4 +1,3 @@
-
 package com.superduckinvaders.game.ai;
 
 import com.badlogic.gdx.Gdx;

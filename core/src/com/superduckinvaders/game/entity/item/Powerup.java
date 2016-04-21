@@ -3,15 +3,19 @@ package com.superduckinvaders.game.entity.item;
 import com.superduckinvaders.game.Round;
 import com.superduckinvaders.game.entity.Player;
 
-import java.util.HashMap;
-
 /**
  * Represents a powerup on the floor.
  */
 public class Powerup extends Item {
 
+    /**
+     * Represents how long each powerup is usually active for.
+     */
     private static final int[] POWERUP_MAX_TIMES = new int[Player.Powerup.values.length];
 
+    /**
+     * Initializes maximum powerup times.
+     */
     static {
         POWERUP_MAX_TIMES[Player.Powerup.INVULNERABLE.ordinal()] = 10;
         POWERUP_MAX_TIMES[Player.Powerup.RATE_OF_FIRE.ordinal()] = 10;

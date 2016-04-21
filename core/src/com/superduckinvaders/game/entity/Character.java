@@ -2,6 +2,7 @@ package com.superduckinvaders.game.entity;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.MathUtils;
+import com.superduckinvaders.game.DuckGame;
 import com.superduckinvaders.game.Round;
 import com.superduckinvaders.game.assets.TextureSet;
 
@@ -11,7 +12,12 @@ import com.superduckinvaders.game.assets.TextureSet;
 public abstract class Character extends Entity {
 
     /**
-     * whether or not the character is swimming
+     * How long a Character should remain in demented mode for after becoming demented.
+     */
+    private static final float DEMENTED_TIME = 10;
+
+    /**
+     * Whether or not the character is swimming.
      */
     protected boolean isSwimming = false;
 
@@ -26,17 +32,17 @@ public abstract class Character extends Entity {
     protected float stateTime = 0;
 
     /**
-     * The last state time for the animation. Set to 0 for not moving.
-     */
-    protected float lastDementedTimer = 0;
-    
-    /**
-     * The state time for the animation. Set to 0 for not moving.
+     * The timer for demented mode. Used to calculate chance of becoming dememnted on this frame.
      */
     protected float dementedTimer = 0;
 
     /**
-     * The state time for the animation. Set to 0 for not moving.
+     * The demented mode timer from the previous frame. Used for mobs explosion effect when exiting demented mode.
+     */
+    protected float lastDementedTimer = 0;
+
+    /**
+     * The demented state of this Character. Used for player input garbing.
      */
     protected int dementedState = 0;
 
@@ -57,15 +63,6 @@ public abstract class Character extends Entity {
         super(parent, x, y);
 
         this.maximumHealth = this.currentHealth = maximumHealth;
-    }
-
-    /**
-     * Gets the direction the character is facing
-     *
-     * @return the direction this Character is facing (one of the FACING_ constants in TextureSet)
-     */
-    public int getFacing() {
-        return facing;
     }
 
     /**
@@ -187,6 +184,7 @@ public abstract class Character extends Entity {
 
     /**
      * Gets whether this Character is currently demented or not.
+     *
      * @return true if the Character is demented
      */
     public boolean isDemented() {
@@ -202,17 +200,19 @@ public abstract class Character extends Entity {
     @Override
     public void update(float delta) {
 
-        //update isSwimming
+        // Update swimming status.
         checkSwimming();
 
-        // Update demented timer.
-        lastDementedTimer = dementedTimer;
-        dementedTimer += delta;
+        // If demented mode is enabled, update timers.
+        if (DuckGame.dementedMode) {
+            lastDementedTimer = dementedTimer;
+            dementedTimer += delta;
 
-
-        if ((int) MathUtils.random(0, 2000 - dementedTimer) == 0) {
-            dementedTimer = -10;
-            dementedState = MathUtils.random(0, 3);
+            // Activate demented mode on timer and if demented mode is enabled.
+            if ((int) MathUtils.random(0, 2000 - dementedTimer) == 0) {
+                dementedTimer = -DEMENTED_TIME;
+                dementedState = MathUtils.random(0, 3);
+            }
         }
 
         // Update Character facing.
