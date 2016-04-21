@@ -155,9 +155,9 @@ public class Mob extends Character {
         if(lastDementedTimer < 0 && dementedTimer > 0) {
         	System.out.println("test");
         	for(int x = -1; x <= 1; x++) {
-            	for(int y = -1; x <= 1; x++) {
+            	for(int y = -1; y <= 1; y++) {
             		if(!(x == 0 && y == 0)) {
-            			fireAt(this.x + (5*x), this.y + (5*y), 300, 1);
+            			fireAt(this.x + getWidth() / 2 + x, this.y + getHeight() / 2 + y, 300, 1);
             		}
             	}
         	}
