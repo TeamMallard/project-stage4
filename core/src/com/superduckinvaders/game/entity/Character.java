@@ -32,6 +32,9 @@ public abstract class Character extends Entity {
     protected float stateTime = 0;
 
     /**
+     * CHANGE D5: Added a timer limiting how long a character can be in demented mode at once.
+     */
+    /**
      * The timer for demented mode. Used to calculate chance of becoming dememnted on this frame.
      */
     protected float dementedTimer = 0;
@@ -203,6 +206,11 @@ public abstract class Character extends Entity {
         // Update swimming status.
         checkSwimming();
 
+        /**
+         * CHANGE D1: Added the possibility of the player character becoming demented after a random amount of time.
+         * CHANGE D2: Added the possibility of enemy mobs becoming demented after a random amount of time.
+         * N.B. the player and enemies are both subclasses of Character.
+         */
         // If demented mode is enabled, update timers.
         if (DuckGame.dementedMode) {
             lastDementedTimer = dementedTimer;

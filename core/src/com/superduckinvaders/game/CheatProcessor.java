@@ -7,22 +7,37 @@ import com.superduckinvaders.game.assets.Assets;
 import com.superduckinvaders.game.entity.Player;
 
 /**
- * Manages cheats.
+ * Manages cheat codes and activation.
  */
 public class CheatProcessor implements InputProcessor {
 
+    /**
+     * CHANGE C6: Added a sound that plays when a cheat is activated.
+     */
+    /**
+     * The sound to play when a cheat is activated.
+     */
     private static final Sound CHEAT_SOUND = Assets.buttonPress;
 
+    /**
+     * CHANGE C4: Added a time limit to the effect of each cheat.
+     */
     /**
      * How long each cheat is active for.
      */
     private static final float CHEAT_ACTIVATION_TIME = 10f;
 
     /**
+     * CHANGE C5: Added a “cooldown” timer, requiring the player to wait a certain amount of time after each cheat ends before it can be activated again.
+     */
+    /**
      * How long each cheat takes to cool down before it can be used again.
      */
     private static final float CHEAT_COOLDOWN_TIME = 60f;
 
+    /**
+     * CHANGE C3: Added key combinations, requiring the player to enter a different combination to activate each cheat.
+     */
     /**
      * The cheat code used to activate all powerups for a time (the famous Konami code).
      */
@@ -89,6 +104,9 @@ public class CheatProcessor implements InputProcessor {
      */
     @Override
     public boolean keyDown(int keycode) {
+        /**
+         * CHANGE C2: Added a cheat that would grant all powerups to the player.
+         */
         // Check for powerup cheat.
         if (keycode == CHEAT_CODE_POWERUP[powerupCodeIndex]) {
             powerupCodeIndex++;
@@ -111,6 +129,9 @@ public class CheatProcessor implements InputProcessor {
             }
         }
 
+        /**
+         * CHANGE C1: Added a “noclip” cheat, allowing the player to walk through walls and enemies.
+         */
         // Check for noclip cheat.
         if (keycode == CHEAT_CODE_NOCLIP[noclipCodeIndex]) {
             noclipCodeIndex++;

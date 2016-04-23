@@ -31,6 +31,9 @@ public class Assets {
     public static TextureSet badGuyNormal, badGuySwimming, badGuyGun;
 
     /**
+     * CHANGE D6: Added new colour-inverted sprites to represent demented characters.
+     */
+    /**
      * Player demented texture sets.
      */
     public static TextureSet playerNormalInv, playerGunInv, playerFlyingInv, playerSwimmingInv;

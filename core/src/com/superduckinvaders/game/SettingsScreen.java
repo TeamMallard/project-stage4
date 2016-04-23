@@ -221,6 +221,9 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        /**
+         * CHANGE D7: Added the option to disable demented mode entirely.
+         */
         // Added button for enabling/disabling demented mode.
         final Label dementedTitle = new Label("Demented Mode: ", white);
         dementedTitle.setPosition((stage.getWidth() - dementedTitle.getPrefWidth()) / 2 - 200, (stage.getHeight() - dementedTitle.getPrefHeight()) / 2 - 240);

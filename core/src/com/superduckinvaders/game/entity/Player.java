@@ -66,6 +66,9 @@ public class Player extends Character {
     private int points = 0;
 
     /**
+     * CHANGE O1: Changed how powerup timers are represented in code.
+     */
+    /**
      * Stores the time remaining of each powerup (a value of 0 or less means the powerup is not active).
      */
     private double[] powerupTimers = new double[Powerup.values.length];
@@ -321,6 +324,9 @@ public class Player extends Character {
                 velocityY = 0;
             }
 
+            /**
+             * CHANGE D3: Added functionality to randomly reverse input control for the player while in demented mode.
+             */
             if (isDemented()) {
                 if (dementedState == 0) {
                     double tempVelX = velocityX;

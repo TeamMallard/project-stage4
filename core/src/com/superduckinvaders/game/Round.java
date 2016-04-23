@@ -506,6 +506,10 @@ public final class Round {
         return false;
     }
 
+    /**
+     * Updates all entities in this Round.
+     * @param delta the time elapsed since the last update
+     */
     private void updateEntities(float delta) {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
@@ -545,7 +549,6 @@ public final class Round {
                     if (getObjectiveType() == Objective.SURVIVE_OBJECTIVE) {
                         // Spawns 2 mobs for every 1 you kill. Levels get progressively harder
                         spawnRandomMobs(2, 100, 100, 300, 300);
-                        System.out.println(mobCount);
                     }
                 }
             } else if (entity.distanceTo(player.getX(), player.getY()) < UPDATE_DISTANCE) {
@@ -555,6 +558,10 @@ public final class Round {
         }
     }
 
+    /**
+     * Updates status towards the objective.
+     * @param delta the time elapsed since the last update in seconds
+     */
     private void updateObjective(float delta) {
         if (objective != null) {
             objective.update(delta);
@@ -613,7 +620,6 @@ public final class Round {
             SurviveObjective surviveObjective = ((SurviveObjective) objective);
             if (surviveObjective.getTimeRemaining() < surviveObjective.getBossSpawnTime()) {
                 if (bossFlag) {
-                    System.out.println("trying to spawn boss 100 times at min 100 max 300 distance");
                     if (spawnRandomBoss(100, 100, 100, 300, 300)) {
                         bossFlag = false;
                     }
