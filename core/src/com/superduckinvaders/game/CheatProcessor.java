@@ -127,6 +127,9 @@ public class CheatProcessor implements InputProcessor {
                     CHEAT_SOUND.play();
                 }
             }
+        } else {
+            // Wrong key; reset counter.
+            powerupCodeIndex = 0;
         }
 
         /**
@@ -148,6 +151,9 @@ public class CheatProcessor implements InputProcessor {
                     CHEAT_SOUND.play();
                 }
             }
+        } else {
+            // Wrong key; reset counter.
+            noclipCodeIndex = 0;
         }
 
         return true;
