@@ -173,6 +173,7 @@ public class Player extends Character {
     /**
      * Gets the time remaining for a particular powerup.
      *
+     * @param powerup the powerup to get the time remaining for
      * @return the time remaining on the powerup
      */
     public double getPowerupTimeRemaining(Powerup powerup) {

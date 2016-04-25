@@ -45,7 +45,7 @@ public class CompleteScreen implements Screen {
      * Initialises this CompleteScreen to display the final score.
      *
      * @param parent the game the screen is associated with
-     * @param score  the final score to display
+     * @param finalScore the final score of the player to display
      */
     public CompleteScreen(DuckGame parent, int finalScore) {
         this.parent = parent;

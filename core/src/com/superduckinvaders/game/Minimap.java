@@ -79,6 +79,8 @@ public class Minimap {
 
     /**
      * Draws a minimap in the top right using coloured cells.
+     * @param prevWindowWidth the previous window width, used for positioning
+     * @param prevWindowHeight the previous window height, used for positioning
      */
     public void drawMinimap(int prevWindowWidth, int prevWindowHeight) {
         Player player = round.getPlayer();
@@ -97,8 +99,6 @@ public class Minimap {
         int minimapScale = 4;
 
         //calculate offset for positioning of minimap
-
-
         int resizeOffsetX = (Gdx.graphics.getWidth() - prevWindowWidth) == 0 ? minimapWidth * minimapScale : (minimapWidth * minimapScale + (Gdx.graphics.getWidth() - prevWindowWidth));
         int resizeOffsetY = (Gdx.graphics.getHeight() - prevWindowHeight) == 0 ? minimapHeight * minimapScale : (minimapHeight * minimapScale + (Gdx.graphics.getHeight() - prevWindowHeight));
 

@@ -142,6 +142,7 @@ public class GameScreen implements Screen {
      * @param text The text for the AnimatedText
      * @param x    The x position for the AnimatedText
      * @param y    The initial y position (will change over its lifetime) for the AnimatedText
+     * @param color The colour of the text to display
      */
     public void addAnimatedText(String text, float x, float y, Color color) {
         AnimatedText animatedText = new AnimatedText(text, x, y, color);
