@@ -10,6 +10,7 @@ import com.superduckinvaders.game.DuckGame;
 
 /**
  * Desktop launcher for Super Duck Invaders.
+ * Executable URL: https://drive.google.com/open?id=0BwfrsNAvbwjWUmh4aFU1anZoSFk
  */
 public class DesktopLauncher {
     public static void main(String[] arg) {
