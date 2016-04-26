@@ -1,7 +1,3 @@
-/**
- * URL for executable: https://drive.google.com/open?id=0B6Dzw1Xbx2OzdkhPY1pQd2ZYODQ
- */
-
 package com.superduckinvaders.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
